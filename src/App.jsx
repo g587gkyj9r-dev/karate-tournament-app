@@ -70,10 +70,14 @@ const [court, setCourt] = useState("");
       return;
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password,
-    });
+    const loginEmail = email.trim() === "motokariyagroup"
+  ? "motokariyagroup@karate.local"
+  : email.trim();
+
+const { error } = await supabase.auth.signInWithPassword({
+  email: loginEmail,
+  password,
+});
 
     if (error) {
       setLoginError("ログインできませんでした：" + error.message);
@@ -281,10 +285,10 @@ async function loadParticipants(tournamentId) {
           <div className="modal">
             <h2>指導員ログイン</h2>
 
-            <label>メールアドレス</label>
+            <label>ログインID</label>
             <input
-              type="email"
-              placeholder="メールアドレス"
+              type="text"
+              placeholder="ログインID"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

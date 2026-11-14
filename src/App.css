@@ -609,3 +609,25 @@ h2 {
     font-size: 11px;
   }
 }
+.final-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.final-court-section {
+  min-width: 0;
+}
+
+.final-court-section h4 {
+  text-align: left;
+}
+
+.final-court-section table {
+  width: 100%;
+  table-layout: fixed;
+}
+.final-section > h3 {
+  grid-column: 1 / -1;
+}

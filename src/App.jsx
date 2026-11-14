@@ -348,6 +348,7 @@ async function loadParticipants(tournamentId) {
                 ＋ 参加者を追加
               </button>
               <button
+              className="final-toggle-fixed"
                onClick={() => setShowFinals(!showFinals)}
               >
               {showFinals ? "決勝戦を閉じる" : "決勝戦を表示"}

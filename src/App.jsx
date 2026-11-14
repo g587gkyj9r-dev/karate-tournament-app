@@ -398,25 +398,24 @@ async function loadParticipants(tournamentId) {
 
                   <button
                     type="button"
-                    onClick={() => setRound1Color("赤")}
+                    onClick={() => setRound2Color("赤")}
                   >
-                    {round1Color === "赤" ? "🔴 ✓" : "🔴"}
+                    {round2Color === "赤" ? "🔴 ✓" : "🔴"}
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => setRound1Color("白")}
+                    onClick={() => setRound2Color("白")}
                   >
-                    {round1Color === "白" ? "⚪ ✓" : "⚪"}
+                    {round2Color === "白" ? "⚪ ✓" : "⚪"}
                   </button>
 
                   <input
-  type="text"
-  inputMode="numeric"
-  placeholder="試合順"
-  value={round1Order}
-  onChange={(e) => setRound1Order(e.target.value)}
-/>
+                    type="number"
+                    placeholder="試合順"
+                    value={round2Order}
+                    onChange={(e) => setRound2Order(e.target.value)}
+                  />
                 </div>
 
 

@@ -10,6 +10,7 @@ function App() {
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [participants, setParticipants] = useState([]);
 const [showParticipantForm, setShowParticipantForm] = useState(false);
+const [showFinals, setShowFinals] = useState(false);
 const [participantName, setParticipantName] = useState("");
 const [division, setDivision] = useState("");
 const [part, setPart] = useState("第1部");
@@ -346,6 +347,11 @@ async function loadParticipants(tournamentId) {
               >
                 ＋ 参加者を追加
               </button>
+              <button
+               onClick={() => setShowFinals(!showFinals)}
+              >
+              {showFinals ? "決勝戦を閉じる" : "決勝戦を表示"}
+              </button>
             </div>
 
             {showParticipantForm && (
@@ -402,23 +408,23 @@ async function loadParticipants(tournamentId) {
 
                   <button
                     type="button"
-                    onClick={() => setRound2Color("赤")}
+                    onClick={() => setRound1Color("赤")}
                   >
-                    {round2Color === "赤" ? "🔴 ✓" : "🔴"}
+                    {round1Color === "赤" ? "🔴 ✓" : "🔴"}
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => setRound2Color("白")}
+                    onClick={() => setRound1Color("白")}
                   >
-                    {round2Color === "白" ? "⚪ ✓" : "⚪"}
+                    {round1Color === "白" ? "⚪ ✓" : "⚪"}
                   </button>
 
                   <input
                     type="number"
                     placeholder="試合順"
-                    value={round2Order}
-                    onChange={(e) => setRound2Order(e.target.value)}
+                    value={round1Order}
+                    onChange={(e) => setRound1Order(e.target.value)}
                   />
                 </div>
 
@@ -499,7 +505,37 @@ async function loadParticipants(tournamentId) {
                     onChange={(e) => setRound4Order(e.target.value)}
                   />
                 </div>
+                      <div className="round-input">
+        <h4>決勝戦</h4>
 
+        <button
+          type="button"
+          onClick={() => setFinalColor("赤")}
+        >
+          {finalColor === "赤" ? "🔴 ✓" : "🔴"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setFinalColor("白")}
+        >
+          {finalColor === "白" ? "○ ✓" : "○"}
+        </button>
+
+        <input
+          type="number"
+          placeholder="試合順"
+          value={finalOrder}
+          onChange={(e) => setFinalOrder(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="コート"
+          value={finalCourt}
+          onChange={(e) => setFinalCourt(e.target.value)}
+        />
+      </div>
 
                 <button onClick={addParticipant}>登録する</button>
                 <button onClick={() => setShowParticipantForm(false)}>
@@ -612,7 +648,61 @@ async function loadParticipants(tournamentId) {
                   </tbody>
                 </table>
               </div>
+             {showFinals && (
+  <div className="final-section">
+    <h3>決勝戦</h3>
 
+    {[...new Set(
+      participants
+        .filter(
+          (participant) =>
+            participant.final_order != null &&
+            participant.final_court.trim() !== ""
+        )
+        .map((participant) => participant.final_court.trim())
+    )]
+      .sort((a, b) => Number(a) - Number(b))
+      .map((court) => (
+        <div key={court} className="final-court-section">
+          <h4>{court}コート</h4>
+
+          <table>
+            <thead>
+              <tr>
+                <th>部門</th>
+                <th>ゼッケン</th>
+                <th>名前</th>
+                <th>試合順</th>
+                <th>赤白</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {participants
+                .filter(
+                  (participant) =>
+                    participant.final_order != null &&
+                    participant.final_court.trim() === court
+                )
+                .sort(
+                  (a, b) => a.final_order - b.final_order
+                )
+                .map((participant) => (
+                  <tr key={participant.id}>
+                    <td>{participant.division}</td>
+                    <td>{participant.bib_number}</td>
+                    <td>{participant.name}</td>
+                    <td>{participant.final_order}番</td>
+                    <td>{participant.final_color}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+  </div>
+)}
+  
               </>
             )}
 

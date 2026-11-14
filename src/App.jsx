@@ -657,6 +657,7 @@ async function loadParticipants(tournamentId) {
       participants
         .filter(
           (participant) =>
+            participant.match_status === "決勝進出" &&
             participant.final_order != null &&
             participant.final_court.trim() !== ""
         )
@@ -682,6 +683,7 @@ async function loadParticipants(tournamentId) {
               {participants
                 .filter(
                   (participant) =>
+                    participant.match_status === "決勝進出" &&
                     participant.final_order != null &&
                     participant.final_court.trim() === court
                 )

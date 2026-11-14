@@ -608,7 +608,19 @@ h2 {
   .bottom-nav button {
     font-size: 11px;
   }
+    .section-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .section-header button {
+    max-width: 100%;
+  }
 }
+  
 .final-section {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
